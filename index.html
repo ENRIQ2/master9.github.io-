@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="./curso.css">
+
+  <title>GastosCasa</title>
+</head>
+<body>
+
+  <!--CUERPO-->
+  <h1>Ingresa Aqui tus <span>Datos!</span></h1>
+  <div class="cont">
+  <input type="text" placeholder="Gastos de Renta" id="renta">
+  <input type="text" placeholder="Gasto de Agua" id="agua">
+  <input type="text" placeholder="Gasto De Electricidad" id="elec">
+  <input type="text" placeholder="Gasto Internet" id="inter">
+  <input type="text" placeholder="Gasto de Gas" id="gas">
+  <input type="text" placeholder="Otros Gastos" id="otros">
+  <input type="submit" value="Ingresar Gastos">
+  </div>
+
+  <!--CANVAS PARA LA GRAFICA-->
+  <canvas id="myChart"></canvas>
+
+  
+  <!--LOGICA Y GRAFICOS-->
+  <script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+  //Aqui se agarra el espacio o canvas para hacer la grafica en 2d
+  let ctx = document.getElementById('myChart').getContext('2d');
+
+  //INPUTS
+  //Aqui se agarra cada elemento del Formulario con sus ID's
+  let renta = document.querySelector('#renta');
+  let agua = document.querySelector('#agua');
+  let elec = document.querySelector('#elec');
+  let inter = document.querySelector('#inter');
+  let gas = document.querySelector('#gas');
+  let otros = document.querySelector('#otros');
+  let submit = document.querySelector('input[type="submit"]'); //Boton de enviar
+  
+
+  //Funcion al momento de hacer click al boton de enviar
+  //Esta funcion capta todos los gastos al momento de dar click al boton de enviar
+  submit.addEventListener('click', function(){
+    let renta1 = renta.value;
+    let agua1 = agua.value;
+    let elec1 = elec.value;
+    let otros1 = otros.value;
+    let gas1 = gas.value;
+    let inter1 = inter.value;
+
+    //enviamos cada valor a la funcion grafico
+    grafico(renta1, agua1, elec1, inter1, gas1, otros1)
+  })
+  
+
+  //GRAFICO
+  //Aqui Se detallan las columnas, sus colores, fondos, etc....
+  function grafico(a,b,c,d,e,f){
+
+    //En el objeto Data se analizan las informaciones como los nombres, bordes, y valores ingresados
+    let data = {
+    labels: ['Renta', 'Agua', 'Electricidad','Internet', 'Gas', 'Gastos'],
+    datasets: [{
+      label: 'Respuestas del formulario',
+      data: [a,b,c,d,e,f],
+      backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)','rgba(200, 206, 86, 0.5)','rgba(200, 50, 86, 0.5)','rgba(200, 100, 86, 0.5)'],
+      borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 300, 36)'],
+      borderWidth: 1
+    }]
+  };
+  //Aqui el grafico se vuelve responsive para mejor experiencia
+  let options = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  };
+
+  //Extension para el graficos donde se añaden las columnas al HTML ´IMPORTANTE´
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: options
+  });
+}
+});
+  </script>
+
+<!--FOOTER-->
+  <footer>
+    <h2>Derechos Reservados Por Lionis E. Sanchez Feliz</h2>
+  </footer>
+</body>
+</html>
